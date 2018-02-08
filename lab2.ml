@@ -44,9 +44,9 @@ To think about before you start coding:
 Now implement the two functions curry and uncurry.
 ......................................................................*)
 
-let curry = fun _ -> failwith "curry not implemented" ;;
-     
-let uncurry = fun _ -> failwith "uncurry not implemented" ;;
+let curry f x y = f(x,y);;
+
+let uncurry f (x,y) = f x y;;
 
 (*......................................................................
 Exercise 2: OCaml's built in binary operators, like ( + ) and ( * ) are
@@ -61,11 +61,9 @@ Using your uncurry function, define uncurried plus and times
 functions.
 ......................................................................*)
 
-let plus =
-  fun _ -> failwith "plus not implemented"
+let plus (x,y) = uncurry ( + );;
      
-let times =
-  fun _ -> failwith "times not implemented" ;;
+let times (x,y) = uncurry ( * );;
   
 (*......................................................................
 Exercise 3: Recall the prods function from Lab 1:
@@ -77,10 +75,13 @@ let rec prods (lst : (int * int) list) : int list =
 
 Now reimplement prods using map and your uncurried times function. Why
 do you need the uncurried times function?
+
 ......................................................................*)
 
-let prods =
-  fun _ -> failwith "prods not implemented" ;; 
+let prods lst =
+  match lst with
+  | [] -> []
+  | (x,y)::tail -> map times(x,y) :: lst ;; 
 
 (*======================================================================
 Part 2: Option types
